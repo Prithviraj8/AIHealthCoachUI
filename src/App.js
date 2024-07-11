@@ -1,24 +1,53 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import UserDataForm from './components/UserDataForm';
+import HealthPlanDisplay from './components/HealthPlanDisplay';
+import FeedbackForm from './components/FeedbackForm';
+import GuidedHealthPlanForm from './components/GuidedHealthPlanForm';
 
 function App() {
+  const [healthPlan, setHealthPlan] = useState(null);
+  const [modifiedHealthPlan, setModifiedHealthPlan] = useState(null);
+  const [guidedHealthPlan, setGuidedHealthPlan] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <h1>Health and Wellness Coach</h1>
+        <nav>
+          <Link to="/">Home</Link> | <Link to="/guided">Guided Health Plan</Link>
+        </nav>
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <div>
+                <UserDataForm setHealthPlan={setHealthPlan} />
+                <HealthPlanDisplay healthPlan={healthPlan} />
+              </div>
+            } 
+          />
+          <Route 
+            path="/feedback" 
+            element={
+              <div>
+                <FeedbackForm setModifiedHealthPlan={setModifiedHealthPlan} />
+                <HealthPlanDisplay healthPlan={modifiedHealthPlan} />
+              </div>
+            } 
+          />
+          <Route 
+            path="/guided" 
+            element={
+              <div>
+                <GuidedHealthPlanForm setGuidedHealthPlan={setGuidedHealthPlan} />
+                <HealthPlanDisplay healthPlan={guidedHealthPlan} />
+              </div>
+            } 
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
