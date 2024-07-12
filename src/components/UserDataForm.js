@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import HealthPlanDisplay from './HealthPlanDisplay';
 
-function UserDataForm({ setHealthPlan }) {
+const API_BASE_URL = 'https://healthcoachai.pythonanywhere.com';
+
+function Home() {
   const [userData, setUserData] = useState({
     name: '',
     age: '',
@@ -12,6 +15,7 @@ function UserDataForm({ setHealthPlan }) {
     mental_health_goals: ''
   });
 
+  const [healthPlan, setHealthPlan] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -22,10 +26,10 @@ function UserDataForm({ setHealthPlan }) {
     e.preventDefault();
     setLoading(true);
     try {
-      console.log('Submitting user data:', userData);
-      const response = await axios.post('http://localhost:8000/agents/health_plan/', userData);
+      console.log('Submitting user data for health_plan API:', userData);
+      const response = await axios.post(API_BASE_URL + '/agents/health_plan/', userData);
       console.log('API Response:', response.data.message);
-      setHealthPlan(response.data.message); // Ensure this line correctly updates the state
+      setHealthPlan(response.data.message);
     } catch (error) {
       console.error('Error submitting user data:', error);
     } finally {
@@ -34,17 +38,20 @@ function UserDataForm({ setHealthPlan }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} required />
-      <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} required />
-      <input type="number" name="weight" placeholder="Weight" value={userData.weight} onChange={handleChange} required />
-      <input type="number" name="height" placeholder="Height" value={userData.height} onChange={handleChange} required />
-      <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} required />
-      <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} required />
-      <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} required />
-      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} />
+        <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} />
+        <input type="number" name="weight" placeholder="Weight" value={userData.weight} onChange={handleChange} />
+        <input type="number" name="height" placeholder="Height" value={userData.height} onChange={handleChange} />
+        <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} />
+        <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} />
+        <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} />
+        <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
+      </form>
+      {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
+    </div>
   );
 }
 
-export default UserDataForm;
+export default Home;

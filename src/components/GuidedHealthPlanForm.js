@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import HealthPlanDisplay from './HealthPlanDisplay';
 
+const API_BASE_URL = 'https://healthcoachai.pythonanywhere.com';
+
 function GuidedHealthPlanForm() {
   const [userData, setUserData] = useState({
     name: '',
@@ -16,7 +18,7 @@ function GuidedHealthPlanForm() {
     mental_health_feedback: ''
   });
 
-  const [guidedHealthPlan, setGuidedHealthPlan] = useState(null);
+  const [healthPlan, setHealthPlan] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -27,10 +29,12 @@ function GuidedHealthPlanForm() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:8000/agents/guided_health_plan/', userData);
-      setGuidedHealthPlan(response.data.message);
+        console.log('Submitting user data for guided_health_plan API:', userData);
+        const response = await axios.post(API_BASE_URL + '/agents/guided_health_plan/', userData);
+        console.log('API Response:', response.data.message);
+        setHealthPlan(response.data.message);
     } catch (error) {
-      console.error('Error submitting guided health plan data:', error);
+      console.error('Error submitting user data:', error);
     } finally {
       setLoading(false);
     }
@@ -39,19 +43,19 @@ function GuidedHealthPlanForm() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} required />
-        <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} required />
-        <input type="number" name="weight" placeholder="Weight" value={userData.weight} onChange={handleChange} required />
-        <input type="number" name="height" placeholder="Height" value={userData.height} onChange={handleChange} required />
-        <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} required />
-        <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} required />
-        <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} required />
-        <input type="text" name="fitness_feedback" placeholder="Fitness Feedback" value={userData.fitness_feedback} onChange={handleChange} required />
-        <input type="text" name="nutrition_feedback" placeholder="Nutrition Feedback" value={userData.nutrition_feedback} onChange={handleChange} required />
-        <input type="text" name="mental_health_feedback" placeholder="Mental Health Feedback" value={userData.mental_health_feedback} onChange={handleChange} required />
+        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} />
+        <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} />
+        <input type="number" name="weight" placeholder="Weight" value={userData.weight} onChange={handleChange} />
+        <input type="number" name="height" placeholder="Height" value={userData.height} onChange={handleChange} />
+        <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} />
+        <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} />
+        <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} />
+        <input type="text" name="fitness_feedback" placeholder="Fitness Feedback" value={userData.fitness_feedback} onChange={handleChange} />
+        <input type="text" name="nutrition_feedback" placeholder="Nutrition Feedback" value={userData.nutrition_feedback} onChange={handleChange} />
+        <input type="text" name="mental_health_feedback" placeholder="Mental Health Feedback" value={userData.mental_health_feedback} onChange={handleChange} />
         <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
       </form>
-      <HealthPlanDisplay healthPlan={guidedHealthPlan} />
+      {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
     </div>
   );
 }
