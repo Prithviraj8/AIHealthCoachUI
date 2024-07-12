@@ -6,27 +6,27 @@ function HealthPlanDisplay({ healthPlan }) {
     return null;
   }
 
-  const { fitness, nutrition, mental_health } = healthPlan;
+  const { workout_plan, meal_plan, wellness_tips } = healthPlan;
 
   return (
     <div>
       <h2>Workout Plan</h2>
       <ul>
-        {fitness && fitness.workout_plan && fitness.workout_plan.map((item, index) => (
+        {workout_plan && workout_plan.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
       </ul>
 
       <h2>Meal Plan</h2>
       <ul>
-        {nutrition && nutrition.meal_plan && nutrition.meal_plan.map((item, index) => (
+        {meal_plan && meal_plan.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
       </ul>
 
-      <h2>Mental Health Tips</h2>
+      <h2>Wellness Tips</h2>
       <ul>
-        {mental_health && mental_health.wellness_tips && mental_health.wellness_tips.map((item, index) => (
+        {wellness_tips && wellness_tips.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
       </ul>
