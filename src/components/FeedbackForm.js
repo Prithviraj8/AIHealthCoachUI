@@ -39,7 +39,8 @@ function FeedbackPage() {
         <input type="text" name="fitness_feedback" placeholder="Fitness Feedback" value={feedback.fitness_feedback} onChange={handleChange} />
         <input type="text" name="nutrition_feedback" placeholder="Nutrition Feedback" value={feedback.nutrition_feedback} onChange={handleChange} />
         <input type="text" name="mental_health_feedback" placeholder="Mental Health Feedback" value={feedback.mental_health_feedback} onChange={handleChange} />
-        <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit Feedback'}</button>
+        <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
+        {loading && <p>Please wait while your fitness plan is generated...</p>}
       </form>
       {modifiedHealthPlan && <HealthPlanDisplay healthPlan={modifiedHealthPlan} />}
     </div>
