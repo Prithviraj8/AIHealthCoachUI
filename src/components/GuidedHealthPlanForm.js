@@ -58,9 +58,9 @@ function GuidedHealthPlanForm() {
         <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} required/>
         <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} required/>
         <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} required/>
-        <input type="text" name="fitness_feedback" placeholder="Fitness Feedback" value={userData.fitness_feedback} onChange={handleChange} required/>
-        <input type="text" name="nutrition_feedback" placeholder="Nutrition Feedback" value={userData.nutrition_feedback} onChange={handleChange} required/>
-        <input type="text" name="mental_health_feedback" placeholder="Mental Health Feedback" value={userData.mental_health_feedback} onChange={handleChange} required/>
+        <input type="text" name="fitness_feedback" placeholder="Fitness Feedback" value={userData.fitness_feedback} onChange={handleChange} />
+        <input type="text" name="nutrition_feedback" placeholder="Nutrition Feedback" value={userData.nutrition_feedback} onChange={handleChange} />
+        <input type="text" name="mental_health_feedback" placeholder="Mental Health Feedback" value={userData.mental_health_feedback} onChange={handleChange} />
         <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
       </form>
       {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
