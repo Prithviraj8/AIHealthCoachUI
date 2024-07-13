@@ -8,6 +8,7 @@ function Home() {
   const [userData, setUserData] = useState({
     name: '',
     age: '',
+    gender: '',
     weight: '',
     height: '',
     fitness_goals: '',
@@ -39,17 +40,24 @@ function Home() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} />
-        <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} />
-        <input type="number" name="weight" placeholder="Weight" value={userData.weight} onChange={handleChange} />
-        <input type="number" name="height" placeholder="Height" value={userData.height} onChange={handleChange} />
-        <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} />
-        <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} />
-        <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} />
-        <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
-      </form>
-      {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="name" placeholder="Name" value={userData.name} onChange={handleChange} required />
+      <input type="number" name="age" placeholder="Age" value={userData.age} onChange={handleChange} required />
+      <input type="number" name="weight" placeholder="Weight (kg)" value={userData.weight} onChange={handleChange} required />
+      <input type="number" name="height" placeholder="Height (cm)" value={userData.height} onChange={handleChange} required />
+      <select name="gender" value={userData.gender} onChange={handleChange} required>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="non-binary">Non-binary</option>
+        <option value="prefer not to say">Prefer not to say</option>
+      </select>
+      <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} required />
+      <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} required />
+      <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} required />
+      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Get Health Plan'}</button>
+    </form>
+    {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
     </div>
   );
 }
