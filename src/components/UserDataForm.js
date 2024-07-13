@@ -55,7 +55,8 @@ function Home() {
       <input type="text" name="fitness_goals" placeholder="Fitness Goals" value={userData.fitness_goals} onChange={handleChange} required />
       <input type="text" name="dietary_preferences" placeholder="Dietary Preferences" value={userData.dietary_preferences} onChange={handleChange} required />
       <input type="text" name="mental_health_goals" placeholder="Mental Health Goals" value={userData.mental_health_goals} onChange={handleChange} required />
-      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Get Health Plan'}</button>
+      <button type="submit" disabled={loading}>{loading ? 'Submitting...' : 'Submit'}</button>
+      {loading && <p>Please wait while your fitness plan is generated...</p>}
     </form>
     {healthPlan && <HealthPlanDisplay healthPlan={healthPlan} />}
     </div>
